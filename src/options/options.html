@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferences - Course Completion Assistant</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <header class="options-header">
+      <div class="brand">
+        <div class="logo-shield">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+        <div>
+          <h1>Extension Preferences & Settings</h1>
+          <p class="subtitle">Configure persistent automation profiles, media presets, and security policies</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-export-settings" class="btn btn-secondary">Export Configuration</button>
+        <button id="btn-import-settings" class="btn btn-secondary">Import Configuration</button>
+        <input type="file" id="input-file-import" accept=".json" style="display: none;">
+      </div>
+    </header>
+
+    <main class="options-main">
+      <!-- Section 1: Window Persistence & Inactivity Prevention -->
+      <section class="options-card">
+        <h2 class="card-heading">Window Persistence & Always Active Engine</h2>
+        <p class="card-subheading">Prevent LMS idle detection, background sleep, and animation loop throttling</p>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-active-enabled">Always Active Mode</label>
+            <span class="row-desc">Master switch to prevent LMS from pausing playback or logging you out due to inactivity</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-active-enabled" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-wake-lock">Screen Wake Lock API</label>
+            <span class="row-desc">Keep screen powered on and prevent sleep or screen savers while learning tabs are open</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-wake-lock" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-spoof-visibility">Page Visibility Spoofing</label>
+            <span class="row-desc">Neutralize document.hidden and visibilitychange events so videos keep playing when switching tabs</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-spoof-visibility" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-prevent-blur">Prevent Window Blur</label>
+            <span class="row-desc">Stop sites from detecting window focus loss or mouse leaving the viewport</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-prevent-blur" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-interval-select">Anti-Idle Activity Pulse Interval</label>
+            <span class="row-desc">Frequency of subtle synthetic events to reset LMS inactivity timers</span>
+          </div>
+          <select id="opt-interval-select" class="select-input">
+            <option value="30">Every 30 seconds</option>
+            <option value="60" selected>Every 60 seconds (Recommended)</option>
+            <option value="120">Every 2 minutes</option>
+            <option value="300">Every 5 minutes</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Section 2: Universal Media Controls -->
+      <section class="options-card">
+        <h2 class="card-heading">Universal Video Enhancement System</h2>
+        <p class="card-subheading">Accelerated playback speeds, automatic video advancement, and intro skipping</p>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-default-speed">Default Playback Speed</label>
+            <span class="row-desc">Applied automatically across Coursera, Udemy, edX, and HTML5 video players</span>
+          </div>
+          <select id="opt-default-speed" class="select-input">
+            <option value="1">1.0x (Standard)</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5" selected>1.5x (Recommended)</option>
+            <option value="1.75">1.75x</option>
+            <option value="2">2.0x (Double Speed)</option>
+            <option value="2.5">2.5x</option>
+            <option value="3">3.0x</option>
+            <option value="4">4.0x</option>
+            <option value="5">5.0x</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-auto-play">Auto Play Videos</label>
+            <span class="row-desc">Start playback immediately upon navigating to a new lecture without clicking play</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-auto-play" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-auto-next">Auto Advance (Auto Next)</label>
+            <span class="row-desc">Automatically find and click the next lesson button when a video concludes</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-auto-next" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-auto-seek-intro">Auto Skip Intros</label>
+            <span class="row-desc">Jump forward past course title animations upon video start</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-auto-seek-intro">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-intro-seconds">Intro Skip Duration (seconds)</label>
+            <span class="row-desc">Number of seconds to skip forward when video begins</span>
+          </div>
+          <input type="number" id="opt-intro-seconds" class="num-input" value="15" min="5" max="120">
+        </div>
+      </section>
+
+      <!-- Section 3: Site Accessibility & Restrictions -->
+      <section class="options-card">
+        <h2 class="card-heading">Unlock Restricted Websites</h2>
+        <p class="card-subheading">Restore native user rights for clipboard, text selection, and context menus</p>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-unlock-right-click">Enable Right Click</label>
+            <span class="row-desc">Unblock disabled context menus on learning portals</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-unlock-right-click" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-unlock-copy">Enable Text Selection & Copy</label>
+            <span class="row-desc">Bypass CSS user-select:none and remove copy blockers</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-unlock-copy" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="row-info">
+            <label class="row-title" for="opt-unlock-shortcuts">Enable Keyboard Shortcuts & DevTools</label>
+            <span class="row-desc">Restore Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+F, and F12 access</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-unlock-shortcuts" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Section 4: Domain Scope & Whitelists -->
+      <section class="options-card">
+        <h2 class="card-heading">Domain Whitelist & Scopes</h2>
+        <p class="card-subheading">Control where automation and media enhancements are applied</p>
+
+        <div class="domain-manager">
+          <div class="domain-input-row">
+            <input type="text" id="input-domain" class="text-input" placeholder="e.g. coursera.org, udemy.com">
+            <button id="btn-add-domain" class="btn btn-primary">Add Domain</button>
+          </div>
+          <div class="domain-chip-list" id="options-domain-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Data Reset -->
+      <section class="options-card danger-zone">
+        <h2 class="card-heading text-danger">Data Management & Reset</h2>
+        <p class="card-subheading">Reset accumulated learning analytics or restore factory default settings</p>
+        <div class="danger-actions">
+          <button id="btn-reset-metrics" class="btn btn-danger">Reset Metrics Only</button>
+          <button id="btn-reset-all" class="btn btn-danger-outline">Reset Everything to Factory Defaults</button>
+        </div>
+      </section>
+    </main>
+
+    <div id="save-toast" class="save-toast">Preferences saved successfully</div>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

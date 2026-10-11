@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Completion Assistant - Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Course Assistant</span>
+          <span class="brand-version">v1.0.0 &bull; Enterprise</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs with CSS Anchor Positioning Indicator -->
+      <nav class="tab-bar" id="main-tab-bar" role="tablist" aria-label="Main Dashboard Navigation">
+        <button class="tab-item active" id="tab-btn-dashboard" data-tab="dashboard" role="tab" aria-selected="true" aria-controls="tab-content-dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="tab-item" id="tab-btn-courses" data-tab="courses" role="tab" aria-selected="false" aria-controls="tab-content-courses">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>Courses</span>
+        </button>
+
+        <button class="tab-item" id="tab-btn-activity" data-tab="activity" role="tab" aria-selected="false" aria-controls="tab-content-activity">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span>Activity</span>
+        </button>
+
+        <button class="tab-item" id="tab-btn-settings" data-tab="settings" role="tab" aria-selected="false" aria-controls="tab-content-settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
+
+        <!-- CSS Anchor Positioning Sliding Active Indicator -->
+        <div class="tab-indicator" id="tab-active-indicator" aria-hidden="true"></div>
+      </nav>
+
+      <!-- Sidebar Security Status Card -->
+      <div class="sidebar-security-badge" id="security-summary-card">
+        <div class="sec-score-ring">
+          <span id="sidebar-sec-score">95</span>
+        </div>
+        <div class="sec-score-meta">
+          <span class="sec-title">Security Score</span>
+          <span class="sec-status" id="sidebar-sec-status">Optimal &bull; Shielded</span>
+        </div>
+      </div>
+
+      <!-- Quick Action: Dark/Light Mode Switch -->
+      <div class="theme-switch-row">
+        <span class="theme-label">Theme Mode</span>
+        <button id="btn-theme-toggle" class="icon-toggle-btn" aria-label="Toggle Theme">
+          <span class="theme-icon sun">☀️</span>
+          <span class="theme-icon moon">🌙</span>
+        </button>
+      </div>
+
+      <!-- Developer & Portfolio Card -->
+      <div class="sidebar-creator-card" style="
+        margin: 12px 16px 16px; padding: 12px; background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; display: flex; flex-direction: column; gap: 4px;
+      ">
+        <div style="font-size: 11px; color: #94a3b8;">
+          Developed by <strong style="color: #38bdf8;">Aryan</strong>
+        </div>
+        <a href="https://aryaninvincible-portfolio.vercel.app" target="_blank" rel="noopener noreferrer" style="
+          font-size: 11px; color: #818cf8; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 4px;
+        ">
+          <span>aryaninvincible-portfolio.vercel.app</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div>
+          <h2 class="view-title" id="page-title">Executive Learning Dashboard</h2>
+          <p class="view-subtitle" id="page-subtitle">Real-time automation status, media metrics, and learning analytics</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-audit-now" class="btn btn-secondary" popovertarget="popover-audit-tooltip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Run Security Audit</span>
+          </button>
+          <!-- Native Popover API Tooltip -->
+          <div id="popover-audit-tooltip" class="native-popover-tooltip" popover="auto">
+            Audit extension permissions, CSP compliance, and storage isolation.
+          </div>
+
+          <button id="btn-add-site" class="btn btn-primary" popovertarget="popover-addsite-tooltip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Whitelisted Site</span>
+          </button>
+          <!-- Native Popover API Tooltip -->
+          <div id="popover-addsite-tooltip" class="native-popover-tooltip" popover="auto">
+            Register a domain to automatically keep active and enhance media playback.
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD VIEW -->
+      <section class="tab-pane active" id="tab-content-dashboard" role="tabpanel" aria-labelledby="tab-btn-dashboard">
+        
+        <!-- 1-Click Learning Preset Bar -->
+        <div class="preset-banner">
+          <div class="preset-banner-info">
+            <span class="preset-sparkle">⚡</span>
+            <div>
+              <strong class="preset-banner-title">1-Click Quick Presets:</strong>
+              <span class="preset-banner-subtitle">Instantly tune playback speed and automation</span>
+            </div>
+          </div>
+          <div class="preset-buttons-group">
+            <button class="preset-pill-btn" id="dash-preset-fast">🚀 Fast Track (2.0x + Auto-Next)</button>
+            <button class="preset-pill-btn active" id="dash-preset-smart">📚 Smart Study (1.5x + Auto-Next)</button>
+            <button class="preset-pill-btn" id="dash-preset-standard">🎯 Standard (1.0x)</button>
+          </div>
+        </div>
+
+        <!-- Container Query Card Grid -->
+        <div class="cards-container-grid">
+          
+          <!-- Card 1: Statistics Card -->
+          <div class="cq-card statistics-card" id="card-stats">
+            <div class="card-header">
+              <div class="card-icon indigo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Learning Velocity</h3>
+                <span class="card-caption">Time saved through accelerated playback</span>
+              </div>
+            </div>
+
+            <div class="stat-highlight">
+              <span class="stat-huge-value" id="dash-time-saved">0h 0m</span>
+              <span class="stat-badge">+2.5x Avg</span>
+            </div>
+
+            <div class="card-metrics-grid">
+              <div class="metric-block">
+                <span class="metric-number" id="dash-videos-count">0</span>
+                <span class="metric-name">Videos Completed</span>
+              </div>
+              <div class="metric-block">
+                <span class="metric-number" id="dash-courses-count">0</span>
+                <span class="metric-name">Active Courses</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Automation Card -->
+          <div class="cq-card automation-card" id="card-automation">
+            <div class="card-header">
+              <div class="card-icon cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Automation Engine</h3>
+                <span class="card-caption">Status of active window persistence</span>
+              </div>
+            </div>
+
+            <div class="engine-status-row">
+              <div class="engine-state">
+                <span class="indicator-pulse" id="engine-status-dot"></span>
+                <span class="engine-state-text" id="engine-status-text">Active Mode: Operational</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="dash-toggle-active-mode" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <ul class="engine-features-list">
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Screen Wake Lock API: Active</span>
+              </li>
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Visibility Spoofing & RAF Preservation</span>
+              </li>
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Anti-Idle Heartbeat: Every 60s</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card 3: Site Status Card -->
+          <div class="cq-card sitestatus-card" id="card-site-status">
+            <div class="card-header">
+              <div class="card-icon emerald">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Domain Whitelist</h3>
+                <span class="card-caption" id="whitelist-count-caption">9 domains configured</span>
+              </div>
+            </div>
+
+            <div class="whitelist-tags-container" id="whitelist-tags">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div class="site-mode-selector">
+              <label class="radio-label">
+                <input type="radio" name="site-mode" value="all" id="mode-all" checked>
+                <span>All Learning Sites</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="site-mode" value="whitelist_only" id="mode-whitelist">
+                <span>Whitelist Only</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Card 4: Session Card -->
+          <div class="cq-card session-card" id="card-session">
+            <div class="card-header">
+              <div class="card-icon purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Active Sessions</h3>
+                <span class="card-caption">Continuous focus sessions recorded</span>
+              </div>
+            </div>
+
+            <div class="session-stat-content">
+              <span class="session-number" id="dash-sessions-count">0</span>
+              <p class="session-desc">Automatic session maintenance prevents premature logout and maintains LMS progress tokens.</p>
+            </div>
+
+            <div class="session-actions">
+              <button id="btn-quick-unlock-all" class="btn btn-sm btn-secondary">Unlock Text & Shortcuts</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ACCORDION STATS COMPONENT (Modern Web Guidance) -->
+        <section class="accordion-section">
+          <div class="section-title-row">
+            <h3 class="section-heading">Detailed Platform Telemetry</h3>
+            <span class="section-subtext">Click panels to expand metrics with smooth intrinsic height transition</span>
+          </div>
+
+          <div class="accordion-group">
+            <!-- Accordion Item 1: Watched Videos -->
+            <details class="modern-accordion" name="stats-group" open>
+              <summary class="accordion-summary">
+                <div class="summary-left">
+                  <span class="acc-icon red">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  </span>
+                  <div>
+                    <strong class="summary-title">Watched Videos & Lectures</strong>
+                    <span class="summary-preview">Detailed breakdown of completed modules</span>
+                  </div>
+                </div>
+                <div class="summary-right">
+                  <span class="summary-pill" id="acc-pill-videos">0 completed</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </summary>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <p class="acc-desc">Videos tracked automatically across HTML5 media players, embedded Coursera iframes, and Udemy players.</p>
+                  <div class="data-table-wrapper">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Course / Lecture</th>
+                          <th>Platform</th>
+                          <th>Speed Used</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="videos-table-body">
+                        <tr><td colspan="4" class="empty-state">No videos completed yet in this session.</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Accordion Item 2: Completed Courses -->
+            <details class="modern-accordion" name="stats-group">
+              <summary class="accordion-summary">
+                <div class="summary-left">
+                  <span class="acc-icon blue">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  </span>
+                  <div>
+                    <strong class="summary-title">Completed Courses & Certificates</strong>
+                    <span class="summary-preview">Progress across tracked curricula</span>
+                  </div>
+                </div>
+                <div class="summary-right">
+                  <span class="summary-pill" id="acc-pill-courses">0 recorded</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </summary>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <p class="acc-desc">Auto Next feature seamlessly advances between curriculum milestones.</p>
+                  <div class="course-cards-row" id="courses-cards-container">
+                    <div class="empty-state">Open Coursera or Udemy to begin automatic tracking.</div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Accordion Item 3: Time Saved -->
+            <details class="modern-accordion" name="stats-group">
+              <summary class="accordion-summary">
+                <div class="summary-left">
+                  <span class="acc-icon green">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </span>
+                  <div>
+                    <strong class="summary-title">Time Saved Analytics</strong>
+                    <span class="summary-preview">Efficiency gains measured against 1.0x baseline</span>
+                  </div>
+                </div>
+                <div class="summary-right">
+                  <span class="summary-pill highlight" id="acc-pill-saved">0 min</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </summary>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <div class="time-savings-breakdown">
+                    <div class="time-block">
+                      <span class="time-big" id="stats-total-saved">0 mins</span>
+                      <span class="time-label">Net Productivity Gained</span>
+                    </div>
+                    <div class="time-block">
+                      <span class="time-big" id="stats-active-speed">1.5x</span>
+                      <span class="time-label">Current Default Speed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Accordion Item 4: Active Sessions -->
+            <details class="modern-accordion" name="stats-group">
+              <summary class="accordion-summary">
+                <div class="summary-left">
+                  <span class="acc-icon amber">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                  </span>
+                  <div>
+                    <strong class="summary-title">Active Sessions & Screen Lock</strong>
+                    <span class="summary-preview">Background keepalive and wake lock metrics</span>
+                  </div>
+                </div>
+                <div class="summary-right">
+                  <span class="summary-pill" id="acc-pill-sessions">Active</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </summary>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <div class="session-diagnostics">
+                    <div class="diag-item">
+                      <span class="diag-key">Wake Lock API</span>
+                      <span class="diag-val ok">Supported & Managed</span>
+                    </div>
+                    <div class="diag-item">
+                      <span class="diag-key">Simulated Event Interval</span>
+                      <span class="diag-val" id="diag-interval">60 seconds</span>
+                    </div>
+                    <div class="diag-item">
+                      <span class="diag-key">Render Loop Throttling</span>
+                      <span class="diag-val ok">Bypassed (16ms RAF proxy)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB 2: COURSES VIEW -->
+      <section class="tab-pane" id="tab-content-courses" role="tabpanel" aria-labelledby="tab-btn-courses">
+        <div class="courses-view-container">
+          <div class="section-title-row">
+            <h3 class="section-heading">Active Learning Platforms</h3>
+            <span class="section-subtext">Recent lecture sessions and automation overrides</span>
+          </div>
+
+          <div class="courses-list-grid" id="courses-history-grid">
+            <!-- Dynamic course items -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ACTIVITY VIEW -->
+      <section class="tab-pane" id="tab-content-activity" role="tabpanel" aria-labelledby="tab-btn-activity">
+        <div class="activity-view-container">
+          <div class="section-title-row">
+            <h3 class="section-heading">System Automation Audit Log</h3>
+            <span class="section-subtext">Real-time trace of wake locks, heartbeats, and video advances</span>
+          </div>
+
+          <div class="activity-log-stream" id="activity-log-stream">
+            <!-- Stream events -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SETTINGS VIEW -->
+      <section class="tab-pane" id="tab-content-settings" role="tabpanel" aria-labelledby="tab-btn-settings">
+        <div class="settings-view-container">
+          
+          <!-- Passkey Security Section -->
+          <div class="settings-card">
+            <div class="settings-card-header">
+              <div class="card-icon indigo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="settings-group-title">Passkey Profile Authentication (WebAuthn)</h4>
+                <p class="settings-group-desc">Lock sensitive extension settings behind biometric or PIN verification.</p>
+              </div>
+            </div>
+            <div class="settings-action-row">
+              <div class="passkey-status-text" id="passkey-status-label">Passkey Protection: Disabled</div>
+              <button id="btn-toggle-passkey" class="btn btn-secondary">Set Up Passkey</button>
+            </div>
+          </div>
+
+          <!-- Window Persistence Controls -->
+          <div class="settings-card">
+            <h4 class="settings-group-title">Window Persistence & Keep-Alive</h4>
+            <div class="setting-item">
+              <div>
+                <strong>Prevent Inactivity Pauses</strong>
+                <p>Simulate subtle user interaction to stop automatic logouts.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-active-mode" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Screen Wake Lock</strong>
+                <p>Prevent system sleep and screen dimming while video is open.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-wake-lock" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Heartbeat Interval</strong>
+                <p>Frequency of background activity simulation.</p>
+              </div>
+              <select id="set-interval-select" class="custom-select">
+                <option value="30">Every 30 seconds</option>
+                <option value="60" selected>Every 60 seconds</option>
+                <option value="120">Every 2 minutes</option>
+                <option value="300">Every 5 minutes</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Video Enhancements -->
+          <div class="settings-card">
+            <h4 class="settings-group-title">Universal Video Controls</h4>
+            <div class="setting-item">
+              <div>
+                <strong>Default Playback Speed</strong>
+                <p>Applied automatically to newly loaded lectures.</p>
+              </div>
+              <select id="set-default-speed" class="custom-select">
+                <option value="1">1.0x (Normal)</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5" selected>1.5x (Optimal)</option>
+                <option value="1.75">1.75x</option>
+                <option value="2">2.0x (Double)</option>
+                <option value="2.5">2.5x</option>
+                <option value="3">3.0x</option>
+                <option value="4">4.0x</option>
+                <option value="5">5.0x</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Auto Advance (Auto Next)</strong>
+                <p>Click Next Lecture button upon video completion.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-auto-next" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Auto Advance Delay</strong>
+                <p>Buffer seconds before automatically navigating.</p>
+              </div>
+              <select id="set-next-delay" class="custom-select">
+                <option value="3">3 seconds</option>
+                <option value="5" selected>5 seconds</option>
+                <option value="10">10 seconds</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Site Unlocking -->
+          <div class="settings-card">
+            <h4 class="settings-group-title">Site Accessibility & Content Unlocker</h4>
+            <div class="setting-item">
+              <div>
+                <strong>Restore Right Click</strong>
+                <p>Unblock custom contextmenu blocks.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-unlock-right-click" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Restore Text Selection & Copy</strong>
+                <p>Override CSS user-select:none and bypass copy blockers.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-unlock-copy" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Restore Keyboard Shortcuts & DevTools</strong>
+                <p>Unblock Ctrl+C, Ctrl+V, F12, and inspect shortcuts.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-unlock-shortcuts" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Course Flow & Quiz Assistant -->
+          <div class="settings-card">
+            <h4 class="settings-group-title">Course Flow & Quiz Assistant Automation</h4>
+            <div class="setting-item">
+              <div>
+                <strong>Auto-Click Post-Video "Start" Overlay</strong>
+                <p>Instantly clicks the 'Start' card when a video concludes so you never have to click manually.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-auto-start-overlay" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Auto-Complete Reading Materials</strong>
+                <p>Automatically clicks 'Mark as completed' on Coursera reading items and advances to next lesson.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-auto-complete-readings" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Quiz Assistant & Side Answers</strong>
+                <p>Displays all quiz questions, options, and recommended answers in a side panel with 1-click select.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-quiz-assistant" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div>
+                <strong>Highlight Recommended Answers in Quiz</strong>
+                <p>Highlights the best answer choice in emerald green with a checkmark badge inside the quiz.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="set-quiz-highlight" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- NATIVE HTML5 DIALOG 1: ADD SITE MODAL (Modern Dialog API) -->
+  <dialog id="dialog-add-site" class="native-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 class="dialog-title">Add Whitelisted Learning Domain</h3>
+        <button class="dialog-close-btn" id="btn-close-add-dialog" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="form-add-domain" method="dialog">
+        <p class="dialog-desc">Enter a domain or hostname (e.g., <code>coursera.org</code>, <code>myuniversity.canvas.net</code>) to enable active window persistence and media controls.</p>
+        <div class="form-group">
+          <label for="input-new-domain">Domain Name</label>
+          <input type="text" id="input-new-domain" class="text-input" placeholder="e.g. coursera.org" required autofocus>
+        </div>
+        <div class="dialog-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-add-site">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-add-site">Add Domain</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- NATIVE HTML5 DIALOG 2: SECURITY AUDIT MODAL -->
+  <dialog id="dialog-security-audit" class="native-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 class="dialog-title">Security & Permission Audit Report</h3>
+        <button class="dialog-close-btn" id="btn-close-audit-dialog" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="audit-modal-body" id="audit-modal-body">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-primary" id="btn-done-audit">Close Report</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- NATIVE HTML5 DIALOG 3: WEBAUTHN PASSKEY AUTHENTICATION MODAL -->
+  <dialog id="dialog-passkey-prompt" class="native-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 class="dialog-title">Passkey Authentication Required</h3>
+        <button class="dialog-close-btn" id="btn-close-passkey-dialog" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="passkey-modal-body">
+        <div class="passkey-icon-center">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <p class="dialog-desc" id="passkey-prompt-desc">Use Windows Hello, Touch ID, or your physical security key to verify your identity and manage protected settings.</p>
+        <div class="passkey-error-msg" id="passkey-error-msg" style="display: none;"></div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-passkey">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-trigger-passkey">Verify with Passkey</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
